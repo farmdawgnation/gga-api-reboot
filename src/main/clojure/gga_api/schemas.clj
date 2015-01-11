@@ -6,7 +6,8 @@
   {:_id           ObjectId
    :assemblyId    sm/Num
    :name          sm/Str
-   :current       sm/Bool})
+   :current       sm/Bool
+   :library       sm/Str})
 
 (def Address
   {:city                        sm/Str

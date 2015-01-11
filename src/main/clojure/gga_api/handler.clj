@@ -12,8 +12,8 @@
             [taoensso.timbre.appenders.rotor :as rotor]
             [selmer.parser :as parser]
             [environ.core :refer [env]]
-            [schema.core :as sm]
-            [cronj.core :as cronj]))
+            [cronj.core :as cronj])
+  (:import [java.io PrintWriter]))
 
 (defroutes base-routes
   (route/resources "/")
@@ -37,7 +37,11 @@
     [:shared-appender-config :rotor]
     {:path "gga_api_reboot.log" :max-size (* 512 1024) :backlog 10})
 
-  (sm/set-fn-validation! true)
+  (defn- write-json-objectid [x #^PrintWriter out]
+      (.print out (clojure.data.json/json-str (str x))))
+
+  (extend org.bson.types.ObjectId clojure.data.json/JSONWriter
+      {:-write write-json-objectid})
 
   (if (env :dev) (parser/cache-off!))
   ;;start the expired session cleanup job
