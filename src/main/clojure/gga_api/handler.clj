@@ -11,6 +11,7 @@
             [taoensso.timbre.appenders.rotor :as rotor]
             [selmer.parser :as parser]
             [environ.core :refer [env]]
+            [schema.core :as sm]
             [cronj.core :as cronj]))
 
 (defroutes base-routes
@@ -34,6 +35,8 @@
   (timbre/set-config!
     [:shared-appender-config :rotor]
     {:path "gga_api_reboot.log" :max-size (* 512 1024) :backlog 10})
+
+  (sm/set-fn-validation! true)
 
   (if (env :dev) (parser/cache-off!))
   ;;start the expired session cleanup job
