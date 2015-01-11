@@ -22,7 +22,10 @@
   :jvm-opts ["-server"]
   :plugins [[lein-ring "0.9.0"]
             [lein-environ "1.0.0"]
-            [lein-ancient "0.5.5"]]
+            [lein-ancient "0.5.5"]
+            [lein-javadoc "0.1.1"]]
+  :javadoc-opts {:package-names ["gov.ga.legis"]
+                 :output-dir "target/javadoc"}
   :ring {:handler gga-api.handler/app
          :init    gga-api.handler/init
          :destroy gga-api.handler/destroy
