@@ -1,6 +1,7 @@
 (ns gga-api.handler
   (:require [compojure.core :refer [defroutes]]
             [gga-api.routes.home :refer [home-routes]]
+            [gga-api.routes.session :refer [session-routes]]
             [gga-api.middleware :refer [load-middleware]]
             [gga-api.session-manager :as session-manager]
             [noir.response :refer [redirect]]
@@ -66,7 +67,7 @@
 
 (def app (app-handler
            ;; add your application routes here
-           [home-routes base-routes]
+           [home-routes session-routes base-routes]
            ;; add custom middleware here
            :middleware (load-middleware)
            :ring-defaults (mk-defaults false)
